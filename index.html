@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact-management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+        }
+        html, body {
+            height: 100%;
+        }
+        .main {
+            display: flex;
+            height: 100%;
+        }
+        aside{
+            position: fixed;
+            height: 100%;
+            width: 200px;
+            background-color: rgba(206, 243, 255, 1);
+            box-shadow: 0px 4px 22px 0px rgba(178, 223, 255, 0.46);
+        }
+        aside header {
+            color: #333;
+            padding: 32px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        aside main ul{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        aside main ul li {
+            list-style: none;
+            margin: 10px;
+        }
+        aside main ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        aside main ul li a:focus {
+            background-color: rgba(45, 165, 252, 1);
+            color: #fff;
+        }
+        aside footer{
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #fff;
+            padding-top: 16px;
+        }
+        aside footer a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .container{
+            margin-left: 200px;
+            width: calc(100% - 200px);
+            /* overflow-x: auto; */
+        }
+        .container nav{
+            padding: 0 16px;
+            color: #333;
+            width: calc(100% - 200px);
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .container nav main {
+            display: flex;
+            align-items: center;
+        }
+        .container main input[type="text"] {
+            width: 400px;
+            height: 32px;
+            padding: 10px 20px;
+            border: 1px solid #e2e2e2;
+            border-radius: 5px;
+            margin: 20px;
+            background-color: rgba(242, 242, 242, 1)
+        }
+        .container main input[type="text"]:focus {
+            border-color: #7D8CC4;
+            outline: none;
+        }
+        .table-container{
+            padding: 16px;
+            margin: 16px;
+            background-color: #FBFBFB;
+            border-radius: 15px;
+        }
+        table{
+            border-collapse: collapse;
+            margin-top: 24px;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(178, 223, 255, 0.15);
+        }
+        thead {
+            background: rgba(178, 223, 255, 1);
+        }
+        thead tr {
+            box-shadow:
+                1px 1px 20px 0px rgba(254, 134, 39, 0.1) inset,
+                -1px -1px 20px 0px rgba(254, 134, 39, 0.1) inset;
+            border: 2px solid #b2dfff;
+            border-radius: 10px;
+        }
+        th, td {
+            padding: 16px 12px;
+            text-align: left;
+            font-size: 15px;
+            color: #333;
+        }
+        th {
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.5px;
+        }
+        tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        tr:nth-of-type(2n){
+            background-color: #B2DFFF4F;
+        }
+
+        @media (max-width: 1200px) {
+            .table-container{
+                width: auto;
+            }
+            th{
+                display: none;
+            }
+            td{
+                display: block;
+            }
+            td::before{
+                content: attr(data-cell) ": ";
+                font-weight: bold;
+                color: #000;
+                margin-bottom: 8px;
+                text-transform: capitalize;
+            }
+        }
+
+        #contact-form-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        #contact-form-modal form {
+            background: #fff;
+            padding: 32px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 320px;
+            max-width: 90vw;
+        }
+        #contact-form-modal input,
+        #contact-form-modal input[type="submit"], button {
+            font-size: 16px;
+        }
+        #contact-form-modal input[type="submit"], button {
+            background: #7D8CC4;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 0;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        i{
+            cursor: pointer;
+            padding: 0 8px;
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector('input[type="text"]');
+            searchInput.addEventListener('input', function() {
+                const filter = searchInput.value.toLowerCase();
+                const rows = document.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const emailCell = row.cells[4];
+                    if (emailCell) {
+                        const emailText = emailCell.textContent.toLowerCase();
+                        row.style.display = emailText.includes(filter) ? '' : 'none';
+                    }
+                });
+            });
+        });
+
+        const indexedDB = window.indexedDB;
+        let db;
+        const request = indexedDB.open("contactsDB", 2);
+        console.log('request: ', request);
+
+        request.onerror = (event) => {
+            console.error("Database error: ", event.target.errorCode);
+        };
+
+        request.onupgradeneeded = (event) => {
+         db = event.target.result; // Use event.target.result instead of request.result
+            if (!db.objectStoreNames.contains("contacts")) {
+                const store = db.createObjectStore("contacts", { keyPath: "email" });
+                console.log("Object store created: ", store);
+            } else {
+                console.log("Object store already exists.");
+            }
+        };
+
+        request.onsuccess = () => {
+            db = request.result;
+            displayContacts();
+        }
+
+        request.onerror = () => {
+            console.error("Error opening database: ", request.error);
+        }
+
+        function addOrUpdateContact(contact){
+            const transaction = db.transaction("contacts", "readwrite");
+            const store = transaction.objectStore("contacts");
+            if(contact.email) {
+                store.put(contact);
+            } else {
+                store.add(contact);
+            }
+            transaction.oncomplete = () => {
+                console.log("Contact added/updated successfully");
+                displayContacts();
+            };
+        };
+
+        function deleteContact(email) {
+            const transaction = db.transaction("contacts", "readwrite");
+            const store = transaction.objectStore("contacts");
+            store.delete(String(email));
+            transaction.oncomplete = () => {
+                console.log("Contact deleted successfully");
+                displayContacts();
+            };
+        };
+
+        function displayContacts() {
+            console.log('db: ', db);
+            if (!db) {
+                console.error("Database not initialized");
+                return;
+            }
+            
+            if (!db.objectStoreNames.contains("contacts")) {
+                console.log("Contacts object store does not exist");
+                return;
+            }
+
+            const transaction = db.transaction("contacts", "readonly");
+            const store = transaction.objectStore("contacts");
+            const request = store.getAll();
+
+            request.onsuccess = () => {
+                const contacts = request.result;
+                const tbody = document.querySelector('tbody');
+                tbody.innerHTML = '';
+                contacts.forEach(contact => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td data-cell="name">${contact.name}</td>
+                        <td data-cell="designation">${contact.designation}</td>
+                        <td data-cell="company">${contact.company}</td>
+                        <td data-cell="industry">${contact.industry}</td>
+                        <td data-cell="email">${contact.email}</td>
+                        <td data-cell="phone number">${contact.phoneNumber}</td>
+                        <td data-cell="country">${contact.country}</td>
+                        <td data-cell="action">
+                            <i class="fa-solid fa-pen" style="color:rgba(8, 132, 255, 1);" onclick="editContact('${contact.email}')"></i>
+                            <i class="fa-solid fa-trash" style="color:rgba(248, 29, 29, 1);" onclick="deleteContact('${contact.email}')"></i>
+                        </td>`;
+                    tbody.appendChild(row);
+                });
+            };
+        }
+        
+        function addUpdateForm() {
+            const modal = document.createElement('div');
+            modal.id = 'contact-form-modal';
+            modal.innerHTML = `
+                <form id="contact-form">
+                    <input type="hidden" id="contact-id">
+                    <input type="text" id="name" placeholder="Name" required>
+                    <input type="text" id="designation" placeholder="Designation" required>
+                    <input type="text" id="company" placeholder="Company" required>
+                    <input type="text" id="industry" placeholder="Industry" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="text" id="phone" placeholder="Phone Number" required>
+                    <input type="text" id="country" placeholder="Country" required>
+                    <input type="submit" value="submit">
+                    <button type="button" id="cancel-btn">Cancel</button>
+                </form>
+            `;
+            document.body.appendChild(modal);
+
+            document.getElementById('cancel-btn').onclick = () => {
+                modal.remove();
+            }
+
+            document.getElementById('contact-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const contact = {
+                    name: document.getElementById('name').value,
+                    designation: document.getElementById('designation').value,
+                    company: document.getElementById('company').value,
+                    industry: document.getElementById('industry').value,
+                    email: document.getElementById('email').value,
+                    phoneNumber: document.getElementById('phone').value,
+                    country: document.getElementById('country').value
+                };
+                console.log(contact);
+                addOrUpdateContact(contact);
+                console.log("Contact added/updated successfully");
+                modal.remove();
+            })
+        }
+        
+        function editContact(email){
+            const transaction = db.transaction("contacts", "readonly");
+            const store = transaction.objectStore("contacts");
+            const request = store.get(String(email));
+            request.onsuccess = () => {
+                const contact = request.result;
+                if (contact) {
+                    addUpdateForm();
+                    document.getElementById('name').value = contact.name;
+                    document.getElementById('designation').value = contact.designation;
+                    document.getElementById('company').value = contact.company;
+                    document.getElementById('industry').value = contact.industry;
+                    document.getElementById('email').value = contact.email;
+                    document.getElementById('phone').value = contact.phoneNumber;
+                    document.getElementById('country').value = contact.country;
+                } else {
+                    console.error("Contact not found");
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <section class="main">
+        <aside>
+            <header>
+                Logo
+            </header>
+            <main>
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Total Contacts</a></li>
+                </ul>
+            </main>
+            <footer>
+                <a href="sign_in.html">Log out</a>
+            </footer>
+        </aside>
+
+        <main class="container">
+            <nav>
+                <header>
+                    <h1>Total Contacts</h1>
+                </header>
+                <main>
+                    <input type="text" placeholder="Search by Email ID..." aria-label="Search Contacts">
+                    <div>
+                        <div>
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            
+                        </div>
+                    </div>
+                </main>
+            </nav>
+            <div style="background-color: rgba(242, 242, 242, 1); height: 2px; width: 100%; "></div>
+                    <div class="table-container">
+                        <div
+                            style = "
+                                display: flex;
+                                flex-flow: row-reverse;
+                                width: 100%;
+                            "
+                        >
+                            <button 
+                            onclick="addUpdateForm()"
+                            style = "
+                                padding: 10px 20px;
+                                color: #000;
+                                border: none;
+                                border-radius: 5px;
+                                font-weight: bold;
+                                cursor: pointer;
+                                font-size: 15px;
+                                line-height: 18px;
+                                letter-spacing: 0.25px;
+                                background-color: #fff;
+                                box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.16);
+                            ">
+                                Add Contacts
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Company</th>
+                                    <th>Industry</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Country</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- indexed DB -->
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </main>
+
+    </section>
+</body>
+</html>

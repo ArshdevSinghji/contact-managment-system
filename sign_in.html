@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Contact-management</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+        }
+        html, body{
+            height: 100%;
+        }
+        .main{
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            width: 1200px;
+            height: 550px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 20px;
+            background-color: rgba(206, 243, 255, 0.26);
+            box-shadow: 0px 4px 22px 0px rgba(178, 223, 255, 0.26);
+        }
+        .container > h1{
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 18px;
+            letter-spacing: 0.25px;
+            vertical-align: middle;
+            color: #7D8CC4;
+            margin-bottom: 24px;
+        }
+        .container > p{
+            margin: 20px 0;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 22px;
+            letter-spacing: 0.25px;
+            opacity: 0.7;
+            text-align: center;
+            vertical-align: middle;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px 20px;
+            width: 400px;
+            height: 32px;
+            border: 1px solid #e2e2e2;
+            border-radius: 5px;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #7D8CC4;
+            outline: none;
+        }
+        input[type="submit"] {
+            margin-top: 24px;
+            padding: 10px 20px;
+            width: 400px;
+            border: none;
+            border-radius: 5px;
+            background-color: #7D8CC4;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 18px;
+            letter-spacing: 0.25px;
+        }
+        input[type="submit"]:hover {
+            background-color: #6a7ab0;
+        }
+        a {
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 18px;
+            letter-spacing: 0.25px;
+            vertical-align: middle;
+            color: #7D8CC4;
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+                window.location.href = "index.html"
+            });
+        });
+    </script>
+</head>
+<body>
+    <main class="main">
+        <div class="container">
+            <h1>Logo</h1>
+            <p>Enter your credentails to access your account</p>
+            <form>
+                <input type="text" placeholder="User ID" aria-label="User ID" required>
+                <input type="password" placeholder="Password" aria-label="Password" required>
+                <input type="submit" value="Sign In">
+                <a href="sign_up.html">Sign Up</a>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
