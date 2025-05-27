@@ -61,7 +61,7 @@
             align-items: center;
             gap: 20px;
         }
-        input[type="text"],
+        input[type="email"],
         input[type="password"] {
             padding: 10px 20px;
             width: 400px;
@@ -69,7 +69,7 @@
             border: 1px solid #e2e2e2;
             border-radius: 5px;
         }
-        input[type="text"]:focus,
+        input[type="email"]:focus,
         input[type="password"]:focus {
             border-color: #7D8CC4;
             outline: none;
@@ -102,15 +102,7 @@
             text-decoration: none;
         }
     </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const form = document.querySelector("form");
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                window.location.href = "index.html"
-            });
-        });
-    </script>
+    <script src="signIn.js"></script>
 </head>
 <body>
     <main class="main">
@@ -118,7 +110,7 @@
             <h1>Logo</h1>
             <p>Enter your credentails to access your account</p>
             <form>
-                <input type="text" placeholder="User ID" aria-label="User ID" required>
+                <input type="email" placeholder="User ID" aria-label="User ID" required>
                 <input type="password" placeholder="Password" aria-label="Password" required>
                 <input type="submit" value="Sign In">
                 <a href="sign_up.html">Sign Up</a>

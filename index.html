@@ -204,7 +204,8 @@
             font-size: 18px;
         }
     </style>
-    <script>
+    <script src="dashboard.js"></script>
+     <!-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             const searchInput = document.querySelector('input[type="text"]');
             searchInput.addEventListener('input', function() {
@@ -230,7 +231,7 @@
         };
 
         request.onupgradeneeded = (event) => {
-         db = event.target.result; // Use event.target.result instead of request.result
+        db = event.target.result; // Use event.target.result instead of request.result
             if (!db.objectStoreNames.contains("contacts")) {
                 const store = db.createObjectStore("contacts", { keyPath: "email" });
                 console.log("Object store created: ", store);
@@ -372,7 +373,7 @@
                 }
             };
         }
-    </script>
+    </script> -->
 </head>
 <body>
     <section class="main">

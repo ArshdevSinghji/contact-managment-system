@@ -102,61 +102,7 @@
             text-decoration: none;
         }
     </style>
-    <script>
-        const indexedDB = window.indexedDB;
-        const request = indexedDB.open("contactsDB", 1);
-        let db;
-
-        request.onupgradeneeded = function() {
-            db = request.result;
-            if (!db.objectStoreNames.contains("user")) {
-                db.createObjectStore("user", { keyPath: "email" });
-            }
-        };
-
-        request.onsuccess = function() {
-            db = request.result;
-        };
-
-        document.addEventListener("DOMContentLoaded", function(){
-            const form = document.querySelector("form");
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                const mail = document.querySelector('input[placeholder="Mail ID"]').value;
-                const password = document.querySelectorAll('input[type="password"]')[0].value;
-                const confirmPassword = document.querySelectorAll('input[type="password"]')[1].value;
-
-                if (password !== confirmPassword) {
-                    alert("Passwords do not match.");
-                    return;
-                }
-
-                if (!db) {
-                    alert("Database not ready. Please try again in a moment.");
-                    return;
-                }
-
-                const transaction = db.transaction("user", "readwrite");
-                const store = transaction.objectStore("user");
-                const getRequest = store.get(mail);
-
-                getRequest.onsuccess = function() {
-                    if(getRequest.result){
-                        alert("User already exists. Please sign in.");
-                    } else {
-                        const addRequest = store.add({ email: mail, password: password });
-                        addRequest.onsuccess = () => {
-                            alert("Account created successfully!");
-                            window.location.href = "index.html";
-                        };
-                        addRequest.onerror = () => {
-                            alert("Error creating account.");
-                        };
-                    }
-                };
-            });
-        });
-    </script>
+    <script src="signUp.js"></script>
 </head>
 <body>
     <main class="main">
