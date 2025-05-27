@@ -19,7 +19,7 @@
 
     let db: IDBDatabase;
 
-    request.onerror = (event) => {
+    request.onerror = () => {
             console.error("Database error!");
     };
 
